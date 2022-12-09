@@ -1,0 +1,16 @@
+.caption {
+	font-size: 1rem;
+	line-height: 1.5rem;
+	max-width: 66%;
+	margin: 1.5rem 0;
+}
+
+.wrapper {
+	width: 90%;
+	max-width: var(--maxwidth);
+	margin: 72px auto auto;
+}
+
+.skewed {
+	transform: skewY(-0deg);
+}

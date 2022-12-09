@@ -1,0 +1,46 @@
+.card {
+	background: var(--bg-shade-2);
+	border-radius: 12px;
+	border: 12px solid var(--accent-shade-1);
+	padding: 48px;
+	color: var(--text-shade-3);
+}
+
+.card .date {
+	display: grid;
+	grid-template-columns: 24px auto;
+	align-items: center;
+	font-size: 1.5rem;
+	font-weight: 500;
+	margin: 24px 0;
+
+	gap: 4px;
+}
+
+.splatfestArt {
+	width: 100%;
+	border-radius: 12px;
+	margin: 0 auto;
+}
+
+.card .date p {
+	margin: 0;
+}
+
+.mapRotation {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 24px;
+	margin: 24px 0 0;
+}
+
+.mapImage {
+	width: 100%;
+	height: auto;
+	border-radius: 12px;
+}
+
+.mapRotation p {
+	margin: 0 0 12px;
+	font-size: 1.5rem;
+}
