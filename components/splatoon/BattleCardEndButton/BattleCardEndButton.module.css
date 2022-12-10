@@ -11,12 +11,12 @@ button.button {
 	background: var(--accent-shade-1);
 	width: 100%;
 	min-height: 72px;
-	padding: 12px;
 
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	color: #fff;
+	border-radius: 0 0 12px 12px;
 }
 
 button.button.all {
@@ -31,5 +31,14 @@ button.button span {
 
 button.button.end {
 	cursor: default;
-	border-radius: 0 0 12px 12px;
+}
+
+@media screen and (max-width: 816px) {
+	button.button {
+		min-height: 54px;
+	}
+
+	button.button span {
+		font-size: 1.5rem;
+	}
 }

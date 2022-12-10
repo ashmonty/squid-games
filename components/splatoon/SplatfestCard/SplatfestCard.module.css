@@ -28,20 +28,78 @@
 	margin: 0;
 }
 
-.mapRotation {
+.maps {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	gap: 24px;
-	margin: 24px 0 0;
+	gap: 18px;
+	align-items: flex-end;
+	margin-top: 12px;
 }
 
-.mapImage {
-	width: 100%;
-	height: auto;
-	border-radius: 12px;
+@media screen and (max-width: 1200px) {
+	.card {
+		padding: 24px;
+		border-width: 9px;
+		margin-bottom: 12px;
+	}
+
+	.cardTitle {
+		font-size: 2.5rem !important;
+	}
+
+	.card .date {
+		font-size: 1.25rem;
+		font-weight: 400;
+		margin: 16px 0;
+	}
+
+	.maps {
+		margin-bottom: 6px;
+	}
 }
 
-.mapRotation p {
-	margin: 0 0 12px;
-	font-size: 1.5rem;
+@media screen and (max-width: 816px) {
+	.maps {
+		gap: 18px;
+	}
+}
+
+@media screen and (max-width: 720px) {
+	.card {
+		padding: 18px;
+		border-width: 6px;
+		margin-bottom: 12px;
+	}
+
+	.cardTitle {
+		font-size: 2rem !important;
+	}
+
+	.card .date {
+		font-size: 1rem;
+		margin: 12px 0;
+	}
+
+	.maps {
+		gap: 12px;
+	}
+
+	.splatfestArt {
+		border-radius: 8px;
+	}
+
+}
+
+@media screen and (max-width: 600px) {
+	.maps {
+		grid-template-columns: 1fr;
+		gap: 16px;
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 420px) {
+	.maps {
+		gap: 12px;
+	}
 }

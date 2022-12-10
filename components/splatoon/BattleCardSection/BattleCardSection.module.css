@@ -11,40 +11,14 @@
 .card.ranked {
 	border-color: var(--orange-shade-1);
 }
-.card.first {
+.card.active {
 	border-style: solid;
-}
-
-.banner {
-	background: var(--accent-shade-1);
-	width: 100%;
-	min-height: 72px;
-
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	color: #fff;
-}
-
-.banner.regular {
-	grid-column: 1 / span 2;
-}
-.banner.ranked {
-	display: none;
-}
-
-.banner span {
-	font-size: 2rem;
-	font-weight: bold;
-	margin-left: 4px;
 }
 
 .maps {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
-	grid-template-rows: repeat(2, auto);
-	gap: 12px 24px;
-	margin-bottom: 24px;
+	gap: 18px;
 	align-items: flex-end;
 }
 
@@ -54,9 +28,9 @@
 	border-radius: 12px;
 }
 
-.maps p {
+.map p {
 	font-size: 1rem;
-	margin: 0;
+	margin: 0 0 12px;
 }
 
 .rule,
@@ -76,15 +50,60 @@
 	margin: 0;
 }
 
-.hideOnMobile {
-	background: #f00;
-}
-
 @media screen and (max-width: 1200px) {
 	.card {
 		padding: 24px;
 		border-width: 9px;
 		border-top: 0;
 		border-bottom: 0;
+	}
+
+	.maps {
+		gap: 12px;
+	}
+
+	.mapImage {
+		border-radius: 8px;
+	}
+}
+
+@media screen and (max-width: 816px) {
+	.maps {
+		gap: 18px;
+	}
+}
+
+@media screen and (max-width: 720px) {
+	.card {
+		padding: 18px;
+		border-width: 6px;
+		border-top: 0;
+		border-bottom: 0;
+	}
+
+	.maps {
+		margin-bottom: 0;
+	}
+
+	.mapImage {
+		border-radius: 12px;
+	}
+
+	.map p {
+		margin: 0 0 6px;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.maps {
+		grid-template-columns: 1fr;
+		gap: 16px;
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 420px) {
+	.maps {
+		gap: 12px;
 	}
 }

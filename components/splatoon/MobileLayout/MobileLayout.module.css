@@ -1,0 +1,41 @@
+.battleCards {
+	display: grid;
+	grid-template-columns: 1fr;
+	column-gap: 12px;
+}
+
+.battleCard {
+	margin-bottom: 12px;
+}
+
+@media screen and (max-width: 720px) {
+	.card {
+		padding: 18px;
+		border-width: 6px;
+		margin-bottom: 12px;
+	}
+
+	.cardTitle {
+		font-size: 2rem !important;
+	}
+
+	.card .date {
+		font-size: 1rem;
+		margin: 12px 0;
+	}
+
+	.mapRotation {
+		gap: 12px;
+		margin: 6px 0 0;
+	}
+
+	.splatfestArt,
+	.mapImage {
+		border-radius: 8px;
+	}
+
+	.mapRotation p {
+		font-size: 1rem;
+		margin-bottom: 6px;
+	}
+}

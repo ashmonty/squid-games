@@ -1,3 +1,9 @@
+.wrapper {
+	width: 90%;
+	max-width: var(--width);
+	margin: 72px auto auto;
+}
+
 .caption {
 	font-size: 1rem;
 	line-height: 1.5rem;
@@ -5,30 +11,23 @@
 	margin: 1.5rem 0;
 }
 
-.wrapper {
-	width: 90%;
-	max-width: var(--maxwidth);
-	margin: 72px auto auto;
-}
-
 .skewed {
 	transform: skewY(-1deg);
 	margin-bottom: 72px;
 }
 
-.battleCards {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	column-gap: 24px;
+@media screen and (max-width: 1200px) {
+	.wrapper {
+		width: 95%;
+	}
+
+	.title {
+		font-size: 3rem !important;
+	}
 }
 
-.battleCardHeader {
-	padding: 48px 48px 36px;
-	border: 12px solid var(--green-shade-1);
-	border-bottom: 0;
-	border-radius: 12px 12px 0 0;
-}
-
-.battleCardHeader.ranked {
-	border-color: var(--orange-shade-1);
+@media screen and (max-width: 420px) {
+	.title {
+		font-size: 2rem !important;
+	}
 }

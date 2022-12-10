@@ -1,0 +1,34 @@
+.banner {
+	background: var(--accent-shade-1);
+	width: 100%;
+	min-height: 72px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+}
+
+.banner.wide {
+	grid-column: 1 / span 2;
+}
+
+.banner span {
+	font-size: 2rem;
+	font-weight: bold;
+	margin-left: 4px;
+}
+
+@media screen and (max-width: 816px) {
+	.banner {
+		min-height: 54px;
+	}
+
+	.clock {
+		width: 24px;
+	}
+
+	.banner span {
+		font-size: 1.5rem;
+	}
+}

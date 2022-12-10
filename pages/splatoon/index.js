@@ -1,10 +1,10 @@
 import Title from '../../components/Title/Title';
 import SplatfestCard from '../../components/splatoon/SplatfestCard/SplatfestCard';
-import BattleCardSection from '../../components/splatoon/BattleCardSection/BattleCardSection';
-import BattleCardEndButton from '../../components/splatoon/BattleCardEndButton/BattleCardEndButton';
+
+import DesktopLayout from '../../components/splatoon/DesktopLayout/DesktopLayout';
+import MobileLayout from '../../components/splatoon/MobileLayout/MobileLayout';
 
 import { Fragment } from 'react';
-
 import classNames from 'classnames';
 
 import styles from './index.module.css';
@@ -26,7 +26,7 @@ export async function getServerSideProps(ctx) {
 			maps: ['saltsprayrig', 'flounderheights', 'mahimahiresort'],
 		},
 		battles: {
-			lastChange: 1670668498, // Unix timestamp for when the course last changed
+			lastChange: 1670687423, // Unix timestamp for when the course last changed
 			changeWaitSeconds: 14400, // how often the courses change in seconds
 			list: [
 				{
@@ -84,78 +84,64 @@ export async function getServerSideProps(ctx) {
 export default function Splatoon({ locale, splatoonInfo }) {
 	const [unixCurrentTime, setUnixCurrentTime] = useState(1670660187); // hardcoded to ensure consinstency between client and server, will be updated with useEffect as soon as the component mounts
 
-	const [regularShown, setRegularShown] = useState(3);
+	const [regularShown, setRegularShown] = useState(2);
 	const [rankedShown, setRankedShown] = useState(2);
 	const maxShown = Math.max(regularShown, rankedShown);
-
-	const augmentAll = () => {
-		setRegularShown(maxShown + 1);
-		setRankedShown(maxShown + 1);
+	const shown = {
+		regular: regularShown,
+		ranked: rankedShown,
 	};
+	const setShown = (type, value) => {
+		if (type === 'regular') {
+			setRegularShown(value);
+		} else if (type === 'ranked') {
+			setRankedShown(value);
+		}
+	};
+
+	const [isMobile, setIsMobile] = useState(false);
 
 	useEffect(() => {
 		setUnixCurrentTime(Math.floor(Date.now() / 1000));
 		setInterval(() => {
 			setUnixCurrentTime(Math.floor(Date.now() / 1000));
 		}, 1000);
+
+		setIsMobile(window.innerWidth <= 816);
+		window.addEventListener('resize', () => {
+			setIsMobile(window.innerWidth <= 816);
+		});
+		// cleanup function
+		return () => window.removeEventListener('resize', setIsMobile(window.innerWidth < 816));
 	}, []);
+
+	const augmentAll = () => {
+		setRegularShown(maxShown + 1);
+		setRankedShown(maxShown + 1);
+	};
 
 	return (
 		<div className={styles.wrapper}>
 			<div className={styles.text}>
-				<Title element="h1">Splatoon map rotation.</Title>
+				<Title element="h1" className={styles.title}>
+					Splatoon map rotation.
+				</Title>
 				<p>Check the current map rotation and splatfest info for Splatoon on Pretendo Network</p>
 			</div>
 
 			<div className={styles.skewed}>
 				<SplatfestCard locale={locale} splatfestInfo={splatoonInfo.splatfest} />
 
-				<div className={styles.battleCards}>
-					{['regular', 'ranked'].map((battleType, i) => (
-						<div
-							className={classNames(styles.battleCardHeader, styles[battleType])}
-							key={i}
-							id={battleType}
-						>
-							<Title element="h2" className={styles.cardTitle}>{`${battleType[0].toUpperCase()}${battleType.substring(
-								1
-							)} Battle`}</Title>
-						</div>
-					))}
-
-					{[...Array(maxShown).keys()].map((key, i) => {
-						return (
-							<Fragment key={key}>
-								<BattleCardSection
-									battleInfo={splatoonInfo.battles}
-									battleType="regular"
-									row={i}
-									key={key}
-									unixCurrentTime={unixCurrentTime}
-									hideOnMobile={i >= regularShown}
-								/>
-								<BattleCardSection
-									battleInfo={splatoonInfo.battles}
-									battleType="ranked"
-									row={i}
-									key={key + 1}
-									unixCurrentTime={unixCurrentTime}
-									hideOnMobile={i >= rankedShown}
-								/>
-							</Fragment>
-						);
-					})}
-
-					{maxShown < splatoonInfo.battles.list.length ? (
-						<BattleCardEndButton onClick={augmentAll} battleType={'all'}>
-							<span>Show more</span>
-						</BattleCardEndButton>
-					) : (
-						<BattleCardEndButton battleType={'all'} end={true}>
-							<span>That&apos;s all!</span>
-						</BattleCardEndButton>
-					)}
-				</div>
+				{isMobile ? (
+					<MobileLayout splatoonInfo={splatoonInfo} unixCurrentTime={unixCurrentTime} shown={shown} setShown={setShown} />
+				) : (
+					<DesktopLayout
+						splatoonInfo={splatoonInfo}
+						unixCurrentTime={unixCurrentTime}
+						augmentAll={augmentAll}
+						maxShown={maxShown}
+					/>
+				)}
 			</div>
 		</div>
 	);
