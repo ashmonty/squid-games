@@ -1,0 +1,35 @@
+button.button {
+	/* here we remove all styling from the button */
+	appearance: none;
+	background: none;
+	border: none;
+	color: inherit;
+	cursor: pointer;
+	font: inherit;
+	line-height: normal;
+	overflow: visible;
+	background: var(--accent-shade-1);
+	width: 100%;
+	min-height: 72px;
+	padding: 12px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+}
+
+button.button.all {
+	grid-column: 1 / span 2;
+}
+
+button.button span {
+	font-size: 2rem;
+	font-weight: bold;
+	margin-left: 4px;
+}
+
+button.button.end {
+	cursor: default;
+	border-radius: 0 0 12px 12px;
+}

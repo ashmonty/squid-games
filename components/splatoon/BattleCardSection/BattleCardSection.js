@@ -6,20 +6,9 @@ import Image from 'next/image';
 import { Placeholder, Clock } from 'phosphor-react';
 import classNames from 'classnames';
 
-import { useState, useEffect } from 'react';
-
-export default function BattleCardSection({ locale, battleInfo, battleType, row }) {
+export default function BattleCardSection({ locale, battleInfo, battleType, row, unixCurrentTime, hideOnMobile }) {
 	const { maps, rule } = battleInfo.list[row][battleType];
 	const { lastChange, changeWaitSeconds } = battleInfo;
-
-	const [unixCurrentTime, setUnixCurrentTime] = useState(1670660187); // hardcoded to ensure consinstency between client and server, will be updated with useEffect as soon as the component mounts
-
-	/*useEffect(() => {
-		setUnixCurrentTime(Math.floor(Date.now() / 1000));
-		setInterval(() => {
-			setUnixCurrentTime(Math.floor(Date.now() / 1000));
-		}, 1000);
-	}, []);*/
 
 	const unixStartTime = lastChange + changeWaitSeconds * row;
 	const unixEndTime = lastChange + changeWaitSeconds * (row + 1);
@@ -44,17 +33,22 @@ export default function BattleCardSection({ locale, battleInfo, battleType, row 
 
 	return (
 		<>
-			<div className={classNames(styles.banner, styles[battleType])}>
+			<div className={classNames(styles.banner, styles[battleType], { [styles.hideOnMobile]: hideOnMobile })}>
 				<Clock size={32} weight="bold" />
 				<span>{active ? 'Now' : countdown(unixCurrentTime)}</span>
 			</div>
-			<div className={classNames(styles.card, styles[battleType], { [styles.first]: active })}>
+			<div
+				className={classNames(styles.card, styles[battleType], {
+					[styles.first]: active,
+					[styles.hideOnMobile]: hideOnMobile,
+				})}
+			>
 				<div className={styles.maps}>
-					{maps.map((map, index) => (
-						<div className={styles.map} key={index}>
-							<p>{splatoonMaps[map].name}</p>
-							<Image className={styles.mapImage} src={splatoonMaps[map].image} alt={map} />
-						</div>
+					{maps.map((map, i) => (
+						<p key={i}>{splatoonMaps[map].name}</p>
+					))}
+					{maps.map((map, i) => (
+						<Image className={styles.mapImage} src={splatoonMaps[map].image} alt={map} key={i} />
 					))}
 				</div>
 

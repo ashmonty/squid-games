@@ -1,5 +1,6 @@
 import { createElement } from 'react';
 import styles from './Title.module.css';
+import classNames from 'classnames';
 
 /**
  * A reusable component for titles.
@@ -13,7 +14,7 @@ import styles from './Title.module.css';
  */
 
 export default function Title(ctx) {
-	const { children: title, element, style, id } = ctx;
+	const { children: title, element, style, id, className } = ctx;
 
 	// regex to match all start/end punctuation except for parentheses and brackets. Please never make me do this again.
 	const punctuationRegex = {
@@ -52,7 +53,7 @@ export default function Title(ctx) {
 	const titleElement = createElement(
 		element || 'h2',
 		{
-			className: styles.title,
+			className: classNames(styles.title, className),
 			style,
 			id,
 		},

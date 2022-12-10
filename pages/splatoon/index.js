@@ -1,12 +1,21 @@
 import Title from '../../components/Title/Title';
 import SplatfestCard from '../../components/splatoon/SplatfestCard/SplatfestCard';
 import BattleCardSection from '../../components/splatoon/BattleCardSection/BattleCardSection';
+import BattleCardEndButton from '../../components/splatoon/BattleCardEndButton/BattleCardEndButton';
+
+import { Fragment } from 'react';
 
 import classNames from 'classnames';
 
 import styles from './index.module.css';
 
-export default function Splatoon({ locale }) {
+import { useState, useEffect } from 'react';
+
+import { getLocale } from '../../utils/locale';
+
+export async function getServerSideProps(ctx) {
+	const locale = getLocale(ctx.locale);
+
 	// currently hardcoded for testing purposes
 	const splatoonInfo = {
 		splatfest: {
@@ -17,7 +26,7 @@ export default function Splatoon({ locale }) {
 			maps: ['saltsprayrig', 'flounderheights', 'mahimahiresort'],
 		},
 		battles: {
-			lastChange: 1670616287, // Unix timestamp for when the course last changed
+			lastChange: 1670668498, // Unix timestamp for when the course last changed
 			changeWaitSeconds: 14400, // how often the courses change in seconds
 			list: [
 				{
@@ -50,9 +59,46 @@ export default function Splatoon({ locale }) {
 						maps: ['walleyewarehouse', 'kelpdome'],
 					},
 				},
+				{
+					regular: {
+						rule: 'turfwar',
+						maps: ['hammerheadbridge', 'arowanamall'],
+					},
+					ranked: {
+						rule: 'splatzones',
+						maps: ['mahimahiresort', 'blackbellyskatepark'],
+					},
+				},
 			],
 		},
 	};
+
+	return {
+		props: {
+			locale,
+			splatoonInfo,
+		},
+	};
+}
+
+export default function Splatoon({ locale, splatoonInfo }) {
+	const [unixCurrentTime, setUnixCurrentTime] = useState(1670660187); // hardcoded to ensure consinstency between client and server, will be updated with useEffect as soon as the component mounts
+
+	const [regularShown, setRegularShown] = useState(3);
+	const [rankedShown, setRankedShown] = useState(2);
+	const maxShown = Math.max(regularShown, rankedShown);
+
+	const augmentAll = () => {
+		setRegularShown(maxShown + 1);
+		setRankedShown(maxShown + 1);
+	};
+
+	useEffect(() => {
+		setUnixCurrentTime(Math.floor(Date.now() / 1000));
+		setInterval(() => {
+			setUnixCurrentTime(Math.floor(Date.now() / 1000));
+		}, 1000);
+	}, []);
 
 	return (
 		<div className={styles.wrapper}>
@@ -66,20 +112,49 @@ export default function Splatoon({ locale }) {
 
 				<div className={styles.battleCards}>
 					{['regular', 'ranked'].map((battleType, i) => (
-						<div className={classNames(styles.battleCardHeader, styles[battleType])} key={i} id={battleType}>
-							<Title element="h2">{`${battleType[0].toUpperCase()}${battleType.substring(1)} Battle`}</Title>
+						<div
+							className={classNames(styles.battleCardHeader, styles[battleType])}
+							key={i}
+							id={battleType}
+						>
+							<Title element="h2" className={styles.cardTitle}>{`${battleType[0].toUpperCase()}${battleType.substring(
+								1
+							)} Battle`}</Title>
 						</div>
 					))}
 
-					<BattleCardSection battleInfo={splatoonInfo.battles} battleType='regular' row={0} />
-					<BattleCardSection battleInfo={splatoonInfo.battles} battleType='ranked' row={0} />
+					{[...Array(maxShown).keys()].map((key, i) => {
+						return (
+							<Fragment key={key}>
+								<BattleCardSection
+									battleInfo={splatoonInfo.battles}
+									battleType="regular"
+									row={i}
+									key={key}
+									unixCurrentTime={unixCurrentTime}
+									hideOnMobile={i >= regularShown}
+								/>
+								<BattleCardSection
+									battleInfo={splatoonInfo.battles}
+									battleType="ranked"
+									row={i}
+									key={key + 1}
+									unixCurrentTime={unixCurrentTime}
+									hideOnMobile={i >= rankedShown}
+								/>
+							</Fragment>
+						);
+					})}
 
-					<BattleCardSection battleInfo={splatoonInfo.battles} battleType='regular' row={1} />
-					<BattleCardSection battleInfo={splatoonInfo.battles} battleType='ranked' row={1} />
-
-					<BattleCardSection battleInfo={splatoonInfo.battles} battleType='regular' row={2} />
-					<BattleCardSection battleInfo={splatoonInfo.battles} battleType='ranked' row={2} />
-
+					{maxShown < splatoonInfo.battles.list.length ? (
+						<BattleCardEndButton onClick={augmentAll} battleType={'all'}>
+							<span>Show more</span>
+						</BattleCardEndButton>
+					) : (
+						<BattleCardEndButton battleType={'all'} end={true}>
+							<span>That&apos;s all!</span>
+						</BattleCardEndButton>
+					)}
 				</div>
 			</div>
 		</div>

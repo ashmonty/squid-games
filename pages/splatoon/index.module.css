@@ -13,6 +13,7 @@
 
 .skewed {
 	transform: skewY(-1deg);
+	margin-bottom: 72px;
 }
 
 .battleCards {
