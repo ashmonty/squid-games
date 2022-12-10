@@ -1,0 +1,33 @@
+.caption {
+	font-size: 1rem;
+	line-height: 1.5rem;
+	max-width: 66%;
+	margin: 1.5rem 0;
+}
+
+.wrapper {
+	width: 90%;
+	max-width: var(--maxwidth);
+	margin: 72px auto auto;
+}
+
+.skewed {
+	transform: skewY(-1deg);
+}
+
+.battleCards {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	column-gap: 24px;
+}
+
+.battleCardHeader {
+	padding: 48px 48px 36px;
+	border: 12px solid var(--green-shade-1);
+	border-bottom: 0;
+	border-radius: 12px 12px 0 0;
+}
+
+.battleCardHeader.ranked {
+	border-color: var(--orange-shade-1);
+}

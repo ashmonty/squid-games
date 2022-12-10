@@ -4,6 +4,7 @@
 	border: 12px solid var(--accent-shade-1);
 	padding: 48px;
 	color: var(--text-shade-3);
+	margin: 72px 0 24px;
 }
 
 .card .date {
