@@ -84,7 +84,7 @@ function GrabFileUrlFromXML(content){
     
 }
 
-export function useNintendoRotation(status){
+export function getNintendoRotation(status){
     if (status){
         process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"; //Nintendo does not have a vaild secure connection
         optdat2 = optdat2.replace("pretendo.cc","nintendo.net");

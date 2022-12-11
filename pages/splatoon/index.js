@@ -12,11 +12,11 @@ import styles from './index.module.css';
 import { useState, useEffect } from 'react';
 
 import { getLocale } from '../../utils/locale';
-import { getMapRotations, getSplatfestData,useNintendoRotation } from '../../utils/fetcher';
+import { getMapRotations, getSplatfestData,getNintendoRotation } from '../../utils/fetcher';
 
 export async function getServerSideProps(ctx) {
 	const locale = getLocale(ctx.locale);
-	useNintendoRotation(false); //used for testing purposes can be removed
+	getNintendoRotation(false); //used for testing purposes can be removed
 	const splatfest = await getSplatfestData(locale);
 	const maprotations = await getMapRotations(locale);
 
@@ -83,7 +83,7 @@ export default function Splatoon({ locale, splatoonInfo }) {
 			</div>
 
 			<div className={styles.skewed}>
-			{hasSplatfest && <SplatfestCard locale={locale} splatfestInfo={splatoonInfo.splatfest} />}
+				{hasSplatfest && <SplatfestCard locale={locale} splatfestInfo={splatoonInfo.splatfest} />}
 
 				{isMobile ? (
 					<MobileLayout locale={locale} splatoonInfo={splatoonInfo} unixCurrentTime={unixCurrentTime} shown={shown} setShown={setShown} />

@@ -9,7 +9,7 @@ import classNames from 'classnames';
 export default function BattleCardSection({ locale, battleInfo, battleType, row, hideOnMobile, unixCurrentTime }) {
 	const { lastChange, changeWaitSeconds } = battleInfo;
 	const { maps, rule } = battleInfo.list[row][battleType];
-	const splatoonMaps = mapsinlocale(locale)
+	const splatoonMaps = mapsinlocale(locale);
 	const unixStartTime = lastChange + changeWaitSeconds * row;
 	const unixEndTime = lastChange + changeWaitSeconds * (row + 1);
 	const isActive = unixCurrentTime >= unixStartTime && unixCurrentTime < unixEndTime;
