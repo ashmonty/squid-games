@@ -1,3 +1,5 @@
 {
-	"api_base": "https://api.domain.com"
+	"api_base": "https://api.domain.com",
+	"BOSS_AES_KEY": "DUMP THE KEY",
+    "BOSS_HMAC_KEY": "FROM YOUR CONSOLE"
 }
