@@ -1,0 +1,11 @@
+{
+	"nav": {
+		"home": "ホーム"
+	},
+	"splatoon": {
+		"modes": {
+			"regular": "レギュラーマッチ",
+			"ranked": "ガチマッチ"
+		}
+	}
+}

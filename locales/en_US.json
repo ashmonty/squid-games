@@ -1,5 +1,11 @@
 {
 	"nav": {
 		"home": "Home"
+	},
+	"splatoon": {
+		"modes": {
+			"regular": "Regular Battles",
+			"ranked": "Ranked Battles"
+		}
 	}
 }

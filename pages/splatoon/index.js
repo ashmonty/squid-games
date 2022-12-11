@@ -86,9 +86,10 @@ export default function Splatoon({ locale, splatoonInfo }) {
 			{hasSplatfest && <SplatfestCard locale={locale} splatfestInfo={splatoonInfo.splatfest} />}
 
 				{isMobile ? (
-					<MobileLayout splatoonInfo={splatoonInfo} unixCurrentTime={unixCurrentTime} shown={shown} setShown={setShown} />
+					<MobileLayout locale={locale} splatoonInfo={splatoonInfo} unixCurrentTime={unixCurrentTime} shown={shown} setShown={setShown} />
 				) : (
 					<DesktopLayout
+						locale={locale}
 						splatoonInfo={splatoonInfo}
 						unixCurrentTime={unixCurrentTime}
 						augmentAll={augmentAll}
