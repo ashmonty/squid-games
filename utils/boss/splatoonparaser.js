@@ -1,16 +1,16 @@
 
-export function paraseContent(contenttype,content){
+export function paraseContent(contenttype,content,locale){
     switch (contenttype) {
         case "SplatfestByaml":
-            return paraseSplatfestByaml(content);
+            return paraseSplatfestByaml(content,locale);
         case "RotationByaml":
-            return paraseRotationBymal(content);
+            return paraseRotationBymal(content,locale);
     }
 }
 
-function paraseSplatfestByaml(content){ 
+function paraseSplatfestByaml(content,locale){ 
    const splatfest = {
-			name: getSplatfestName(content),
+			name: getSplatfestName(content,locale),
 			start: getSplatfestTime(content)[1],
 			end: getSplatfestTime(content)[2],
 			art: 'https://cdn.discordapp.com/attachments/413884110667251722/1041436681133363292/handvshome.jpg',
@@ -28,10 +28,11 @@ function getSplatfestMaps(content) {
     return maps;
 }
 
-function getSplatfestName(content) {
+function getSplatfestName(content,locale) {
     const Teams = content.value.Teams.value;
-    const TeamAlpha = Teams[0].value.ShortName.value.USen.value;
-    const TeamBravo = Teams[1].value.ShortName.value.USen.value;
+    const teamlocale = locale.splatoon.splatfestlocale;
+    const TeamAlpha = Teams[0].value.ShortName.value[teamlocale].value;
+    const TeamBravo = Teams[1].value.ShortName.value[teamlocale].value;
     return `${TeamAlpha} vs ${TeamBravo}`;
 }
 
@@ -105,19 +106,8 @@ function mapidToMapName(ID){
     }
 }
 
-function gachiToRankedName(gachiRule){
-    switch (gachiRule){
-        case "cVar":
-            return "Splat Zones";
-        case "cVlf":
-            return "Tower Control";
-        case "cVgl":
-            return "Rainmaker";
-        case "cPnt":
-            return "Turf War";
-        default:
-            return "Unknown Mode";
-    }
+function gachiToRankedName(gachiRule,locale){
+    return locale.splatoon.gamemodes[gachiRule]
 }
 
 function getDateOfFirstRotaion(content){
@@ -143,21 +133,21 @@ function CalculateWhichRotation(filedate){
     return rotationNumber;
 }
 
-function getCurrentRotations(content){
+function getCurrentRotations(content,locale){
   const number = CalculateWhichRotation(getDateOfFirstRotaion(content));
   let ReturnedRotation = [];
   for (let i = number;i < 180;i++){
-    ReturnedRotation.push(getRotationInfoAtIndex(content,i));
+    ReturnedRotation.push(getRotationInfoAtIndex(content,i,locale));
   }
   return ReturnedRotation;
 }
 
-function paraseRotationBymal(content){
+function paraseRotationBymal(content,locale){
     const rotation = CalculateWhichRotation(getDateOfFirstRotaion(content));
     const battles = {
 			lastChange: getLastChangeTime(content,rotation), // Unix timestamp for when the course last changed
 			changeWaitSeconds: (rotation < 179) ? 14400 : 3600 * 67800, // how often the courses change in seconds
-			list: getCurrentRotations(content)
+			list: getCurrentRotations(content,locale)
 		};
         return battles;
 }
@@ -170,7 +160,7 @@ function getRotations(content){
     return content.value.Phases.value;
 }
 
-function getRotationInfoAtIndex(content,index){
+function getRotationInfoAtIndex(content,index,locale){
     const Rotations = getRotations(content);
     const RequiredRotation = Rotations[index].value;
 
@@ -178,7 +168,7 @@ function getRotationInfoAtIndex(content,index){
     NormalMaps.push(mapidToMapName(RequiredRotation.RegularStages.value[0].value.MapID.value));
     NormalMaps.push(mapidToMapName(RequiredRotation.RegularStages.value[1].value.MapID.value));
     
-    let RankedMode = gachiToRankedName(RequiredRotation.GachiRule.value);
+    let RankedMode = gachiToRankedName(RequiredRotation.GachiRule.value,locale);
 
     let RankedMaps = [];
     RankedMaps.push(mapidToMapName(RequiredRotation.GachiStages.value[0].value.MapID.value));
@@ -186,7 +176,7 @@ function getRotationInfoAtIndex(content,index){
 
     const ReturnedRotation = {
         regular: {
-            rule: gachiToRankedName("cPnt"),
+            rule: gachiToRankedName("cPnt",locale),
             maps: NormalMaps,
         },
         ranked: {

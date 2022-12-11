@@ -6,6 +6,31 @@
 		"modes": {
 			"regular": "Regular Battles",
 			"ranked": "Ranked Battles"
-		}
+		},
+		"gamemodes": {
+			"cVar": "Splat Zones",
+			"cVlf": "Tower Control",
+			"cVgl": "Rainmaker",
+			"cPnt": "Turf War"
+		},
+		"maps": {
+			"anchovgames": "Ancho-V Games",
+			"arowanamall": "Arowana Mall",
+			"blackbellyskatepark": "Blackbelly Skatepark",
+			"bluefindepot": "Bluefin Depot",
+			"camptriggerfish": "Camp Triggerfish",
+			"flounderheights": "Flounder Heights",
+			"hammerheadbridge": "Hammerhead Bridge",
+			"kelpdome": "Kelp Dome",
+			"mahimahiresort": "Mahi-Mahi Resort",
+			"moraytowers": "Moray Towers",
+			"museumdalfonsino": "Museum d'Alfonsino",
+			"piranhapit": "Piranha Pit",
+			"portmackerel": "Port Mackerel",
+			"saltsprayrig": "Saltspray Rig",
+			"urchinunderpass": "Urchin Underpass",
+			"walleyewarehouse": "Walleye Warehouse"
+		},
+		"splatfestlocale": "USen"
 	}
 }

@@ -1,6 +1,6 @@
 import styles from './BattleCardSection.module.css';
 
-import splatoonMaps from '../../../utils/splatoonMaps';
+import {mapsinlocale} from '../../../utils/splatoonMaps';
 
 import Map from '../Map/Map';
 import { Placeholder, Clock } from 'phosphor-react';
@@ -9,7 +9,7 @@ import classNames from 'classnames';
 export default function BattleCardSection({ locale, battleInfo, battleType, row, hideOnMobile, unixCurrentTime }) {
 	const { lastChange, changeWaitSeconds } = battleInfo;
 	const { maps, rule } = battleInfo.list[row][battleType];
-
+	const splatoonMaps = mapsinlocale(locale)
 	const unixStartTime = lastChange + changeWaitSeconds * row;
 	const unixEndTime = lastChange + changeWaitSeconds * (row + 1);
 	const isActive = unixCurrentTime >= unixStartTime && unixCurrentTime < unixEndTime;

@@ -6,6 +6,31 @@
 		"modes": {
 			"regular": "レギュラーマッチ",
 			"ranked": "ガチマッチ"
-		}
+		},
+		"gamemodes": {
+			"cVar": "ガチエリア",
+			"cVlf": "ガチヤグラ",
+			"cVgl": "ガチホコバトル",
+			"cPnt": "ナワバリバトル"
+		},
+		"maps": {
+			"anchovgames": "アンチョビットゲームズ",
+			"arowanamall": "アロワナモール",
+			"blackbellyskatepark": "Ｂバスパーク",
+			"bluefindepot": "ネギトロ炭鉱",
+			"camptriggerfish": "モンガラキャンプ場",
+			"flounderheights": "ヒラメが丘団地",
+			"hammerheadbridge": "マサバ海峡大橋",
+			"kelpdome": "モズク農園",
+			"mahimahiresort": "マヒマヒリゾート＆スパ",
+			"moraytowers": "タチウオパーキング",
+			"museumdalfonsino": "キンメダイ美術館",
+			"piranhapit": "ショッツル鉱山",
+			"portmackerel": "ホッケふ頭",
+			"saltsprayrig": "シオノメ油田",
+			"urchinunderpass": "デカライン高架下",
+			"walleyewarehouse": "ハコフグ倉庫"
+		},
+		"splatfestlocale": "JPja"
 	}
 }

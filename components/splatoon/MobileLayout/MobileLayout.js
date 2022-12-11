@@ -29,6 +29,7 @@ export default function MobileLayout({locale, splatoonInfo, unixCurrentTime, sho
 										row={j}
 										key={key}
 										unixCurrentTime={unixCurrentTime}
+										locale={locale}
 									/>
 								</Fragment>
 							);

@@ -27,14 +27,14 @@ async function httpGetAsync(theUrl,parase)
     return null;
 }
 
-export async function getSplatfestData(){
+export async function getSplatfestData(locale){
    if (ShouldRefresh()) {
     try {
    const files = await httpGetAsync(optdat2,true);
    const maininfofile = await httpGetAsync(files[0]);
    const mainfobymal = boss.decrypt(Buffer.from(maininfofile),BOSS_AES_KEY,BOSS_HMAC_KEY);
    const mainfilearray =new Byaml(mainfobymal.content).root;
-   splatfestcache = paraseContent("SplatfestByaml",mainfilearray);
+   splatfestcache = paraseContent("SplatfestByaml",mainfilearray,locale);
     } catch (c) {
         logger.warn(c);
         return null;
@@ -44,14 +44,14 @@ export async function getSplatfestData(){
    //TODO Get the Splatfest Cover
 }
 
-export async function getMapRotations(){
+export async function getMapRotations(locale){
     if (ShouldRefresh()) {
      try {
     const file = await httpGetAsync(schdat2,true);
     const maininfofile = await httpGetAsync(file);
     const mainfobymal = boss.decrypt(Buffer.from(maininfofile),BOSS_AES_KEY,BOSS_HMAC_KEY);
     const mainfilearray = new Byaml(mainfobymal.content).root;
-    rotationcache = paraseContent("RotationByaml",mainfilearray);
+    rotationcache = paraseContent("RotationByaml",mainfilearray,locale);
      } catch (c) {
         logger.warn(c);
         return null

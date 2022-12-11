@@ -2,13 +2,14 @@ import Title from '../../Title/Title';
 import Map from '../Map/Map';
 import styles from './SplatfestCard.module.css';
 
-import splatoonMaps from '../../../utils/splatoonMaps';
+import {mapsinlocale} from '../../../utils/splatoonMaps';
 
 import Image from 'next/image';
 
 import { CalendarBlank } from 'phosphor-react';
 
 export default function SplatfestCard({ locale, splatfestInfo: { name, start, end, art, maps } }) {
+	const splatoonMaps = mapsinlocale(locale)
 	const formattedDate = (timestamp) => {
 		return new Date(timestamp * 1000).toLocaleString([], {
 			weekday: 'long',

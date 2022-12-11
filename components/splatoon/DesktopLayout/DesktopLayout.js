@@ -29,6 +29,7 @@ export default function DesktopLayout({locale, splatoonInfo, unixCurrentTime, au
 							row={i}
 							key={key}
 							unixCurrentTime={unixCurrentTime}
+							locale={locale}
 						/>
 						<BattleCardSection
 							battleInfo={splatoonInfo.battles}
@@ -36,6 +37,7 @@ export default function DesktopLayout({locale, splatoonInfo, unixCurrentTime, au
 							row={i}
 							key={key + 1}
 							unixCurrentTime={unixCurrentTime}
+							locale={locale}
 						/>
 					</Fragment>
 				);

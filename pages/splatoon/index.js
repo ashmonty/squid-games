@@ -17,8 +17,8 @@ import { getMapRotations, getSplatfestData,useNintendoRotation } from '../../uti
 export async function getServerSideProps(ctx) {
 	const locale = getLocale(ctx.locale);
 	useNintendoRotation(false); //used for testing purposes can be removed
-	const splatfest = await getSplatfestData();
-	const maprotations = await getMapRotations();
+	const splatfest = await getSplatfestData(locale);
+	const maprotations = await getMapRotations(locale);
 
 	const splatoonInfo = {
 		splatfest: splatfest,
