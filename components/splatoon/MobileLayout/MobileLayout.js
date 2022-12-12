@@ -22,6 +22,7 @@ export default function MobileLayout({localecode,locale, splatoonInfo, unixCurre
 										battleInfo={splatoonInfo.battles}
 										unixCurrentTime={unixCurrentTime}
 										active={!key}
+										locale={locale}
 									/>
 									<BattleCardSection
 										battleInfo={splatoonInfo.battles}
@@ -40,6 +41,7 @@ export default function MobileLayout({localecode,locale, splatoonInfo, unixCurre
 							onClick={() => setShown(battleType, shown[battleType] + 1)}
 							battleType={battleType}
 							end={shown[battleType] >= splatoonInfo.battles.list.length}
+							locale={locale}
 						/>
 					</div>
 				);

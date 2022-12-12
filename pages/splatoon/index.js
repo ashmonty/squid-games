@@ -79,9 +79,9 @@ export default function Splatoon({localecode ,locale, splatoonInfo }) {
 		<div className={styles.wrapper}>
 			<div className={styles.text}>
 				<Title element="h1" className={styles.title}>
-					Splatoon map rotation.
+					{locale.nav.main}
 				</Title>
-				<p>Check the current map rotation and splatfest info for Splatoon on Pretendo Network</p>
+				<p>{locale.nav.description}</p>
 			</div>
 
 			<div className={styles.skewed}>

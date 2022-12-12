@@ -23,7 +23,7 @@ export default function SplatfestCard({localecode ,locale, splatfestInfo: { name
 
 	return (
 		<div className={styles.card}>
-			<Title element="h2" className={styles.cardTitle}>{`${locale.splatoon.splatfest}: ${name}`}</Title>
+			<Title element="h2" className={styles.cardTitle}>{`${locale.splatoon.splatfest} ${name}`}</Title>
 			<div className={styles.date}>
 				<CalendarBlank size={24} weight="bold" />
 				<p>{`${formattedDate(start)} - ${formattedDate(end)}`}</p>

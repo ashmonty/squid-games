@@ -22,6 +22,7 @@ export default function DesktopLayout({localecode, locale, splatoonInfo, unixCur
 							battleInfo={splatoonInfo.battles}
 							unixCurrentTime={unixCurrentTime}
 							isWide={true}
+							locale={locale}
 						/>
 						<BattleCardSection
 							battleInfo={splatoonInfo.battles}
@@ -49,6 +50,7 @@ export default function DesktopLayout({localecode, locale, splatoonInfo, unixCur
 				onClick={augmentAll}
 				battleType={'all'}
 				end={maxShown >= splatoonInfo.battles.list.length}
+				locale={locale}
 			/>
 		</div>
 	);

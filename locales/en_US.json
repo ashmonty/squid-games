@@ -1,6 +1,8 @@
 {
 	"nav": {
-		"home": "Home"
+		"home": "Home",
+		"main": "Splatoon Map Rotation.",
+		"description": "Check the current map rotation and splatfest info for Splatoon on Pretendo Network"
 	},
 	"splatoon": {
 		"modes": {
@@ -32,6 +34,14 @@
 			"walleyewarehouse": "Walleye Warehouse"
 		},
 		"splatfestlocale": "USen",
-		"splatfest": "Splatfest"
+		"splatfest": "Splatfest:",
+		"time": {
+			"now": "Now",
+			"previous": "Previous"
+		},
+		"buttons": {
+			"last": "That's all for now!",
+			"more": "Show more"
+		}
 	}
 }

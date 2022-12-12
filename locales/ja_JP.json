@@ -1,6 +1,8 @@
 {
 	"nav": {
-		"home": "ホーム"
+		"home": "ホーム",
+		"main": "『スプラトゥーン』マップローテーション.",
+		"description": "Pretendo Networkで『スプラトゥーン』現在のマップローテーションとスプラトゥーンフェス情報を確認する。"
 	},
 	"splatoon": {
 		"modes": {
@@ -32,6 +34,15 @@
 			"walleyewarehouse": "ハコフグ倉庫"
 		},
 		"splatfestlocale": "JPja",
-		"splatfest": "フェス"
+		"splatfest": "フェス：",
+		"time": {
+			"now": "現在",
+			"previous": "前",
+			"last": "以上です。"
+		},
+		"buttons": {
+			"last": "以上です。",
+			"more": "もっと見る"
+		}
 	}
 }
