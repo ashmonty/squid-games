@@ -22,6 +22,12 @@ export default function BattleCardSection({localecode ,locale, battleInfo, battl
 		});
 	};
 
+	const [formattedStartTime,setStartTime] = useState(null);
+	const [formattedEndTime,setEndTime] = useState(null);
+	useEffect(() => {
+		setStartTime(formattedTime(unixStartTime));
+		setEndTime(formattedTime(unixEndTime));
+	})
 	return (
 		<div
 			className={classNames(styles.card, styles[battleType], {
@@ -42,7 +48,7 @@ export default function BattleCardSection({localecode ,locale, battleInfo, battl
 				</div>
 				<div className={styles.time}>
 					<Clock size={24} weight="bold" />
-					<p>{`${formattedTime(unixStartTime)} - ${formattedTime(unixEndTime)}`}</p>
+					<p>{`${formattedStartTime} - ${formattedEndTime}`}</p>
 				</div>
 			</div>
 		</div>

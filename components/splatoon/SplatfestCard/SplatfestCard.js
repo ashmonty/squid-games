@@ -21,12 +21,19 @@ export default function SplatfestCard({localecode ,locale, splatfestInfo: { name
 		});
 	};
 
+	const [formattedStartTime,setStartTime] = useState(null);
+	const [formattedEndTime,setEndTime] = useState(null);
+	useEffect(() => {
+		setStartTime(formattedDate(start));
+		setEndTime(formattedDate(end));
+	})
+
 	return (
 		<div className={styles.card}>
 			<Title element="h2" className={styles.cardTitle}>{`${locale.splatoon.splatfest} ${name}`}</Title>
 			<div className={styles.date}>
 				<CalendarBlank size={24} weight="bold" />
-				<p>{`${formattedDate(start)} - ${formattedDate(end)}`}</p>
+				<p>{`${formattedStartTime} - ${formattedEndTime}`}</p>
 			</div>
 
 			<img className={styles.splatfestArt} src={art} alt="" />
