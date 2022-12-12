@@ -2,7 +2,7 @@
 	"nav": {
 		"home": "ホーム",
 		"main": "『スプラトゥーン』マップローテーション.",
-		"description": "Pretendo Networkで『スプラトゥーン』現在のマップローテーションとスプラトゥーンフェス情報を確認する。"
+		"description": "Pretendo Networkで『スプラトゥーン』現在のマップローテーションとフェス情報を確認する。"
 	},
 	"splatoon": {
 		"modes": {
@@ -37,11 +37,10 @@
 		"splatfest": "フェス：",
 		"time": {
 			"now": "現在",
-			"previous": "前",
-			"last": "以上です。"
+			"previous": "前"
 		},
 		"buttons": {
-			"last": "以上です。",
+			"last": "以上です!",
 			"more": "もっと見る"
 		}
 	}
