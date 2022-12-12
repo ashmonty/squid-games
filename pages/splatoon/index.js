@@ -60,7 +60,7 @@ export default function Splatoon({localecode ,locale, splatoonInfo }) {
 		setInterval(() => {
 			setUnixCurrentTime(Math.floor(Date.now() / 1000));
 		}, 1000);
-		setSplatfestShown(splatoonInfo.splatfest.end <= Math.floor(Date.now() / 1000));
+		setSplatfestShown(splatoonInfo.splatfest.end >= Math.floor(Date.now() / 1000));
 
 		setIsMobile(window.innerWidth <= 816);
 		window.addEventListener('resize', () => {
