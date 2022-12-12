@@ -7,7 +7,7 @@ import styles from './DesktopLayout.module.css';
 
 import { Fragment } from 'react';
 
-export default function DesktopLayout({locale, splatoonInfo, unixCurrentTime, augmentAll, maxShown }) {
+export default function DesktopLayout({localecode, locale, splatoonInfo, unixCurrentTime, augmentAll, maxShown }) {
 	return (
 		<div className={styles.battleCards}>
 			{['regular', 'ranked'].map((battleType, i) => (
@@ -30,6 +30,7 @@ export default function DesktopLayout({locale, splatoonInfo, unixCurrentTime, au
 							key={key}
 							unixCurrentTime={unixCurrentTime}
 							locale={locale}
+							localecode={localecode}
 						/>
 						<BattleCardSection
 							battleInfo={splatoonInfo.battles}
@@ -38,6 +39,7 @@ export default function DesktopLayout({locale, splatoonInfo, unixCurrentTime, au
 							key={key + 1}
 							unixCurrentTime={unixCurrentTime}
 							locale={locale}
+							localecode={localecode}
 						/>
 					</Fragment>
 				);

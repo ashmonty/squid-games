@@ -8,8 +8,10 @@ import Byaml from './boss/byaml';
 
 const BOSS_AES_KEY = config.BOSS_AES_KEY;
 const BOSS_HMAC_KEY = config.BOSS_HMAC_KEY;
-var splatfestcache = [];
-var rotationcache = [];
+var splatfestarraycache = null;
+var rotationarraycache = null;
+var splatfestfileurl = "";
+var rotationfileurl = "";
 
 var optdat2 = "https://npts.app.pretendo.cc/p01/tasksheet/1/rjVlM7hUXPxmYQJh/optdat2?c=CA&l=en";
 var schdat2 = "https://npts.app.pretendo.cc/p01/tasksheet/1/rjVlM7hUXPxmYQJh/schdat2?c=CA&l=en";
@@ -28,36 +30,34 @@ async function httpGetAsync(theUrl,parase)
 }
 
 export async function getSplatfestData(locale){
-   if (ShouldRefresh()) {
     try {
    const files = await httpGetAsync(optdat2,true);
+   if (splatfestfileurl === files[0]) {paraseContent("SplatfestByaml",splatfestarraycache,locale);}
    const maininfofile = await httpGetAsync(files[0]);
    const mainfobymal = boss.decrypt(Buffer.from(maininfofile),BOSS_AES_KEY,BOSS_HMAC_KEY);
-   const mainfilearray =new Byaml(mainfobymal.content).root;
-   splatfestcache = paraseContent("SplatfestByaml",mainfilearray,locale);
+   splatfestarraycache =new Byaml(mainfobymal.content).root;
+   splatfestfileurl = files[0];
     } catch (c) {
         logger.warn(c);
         return null;
     }
-   }
-   return splatfestcache;
+   return paraseContent("SplatfestByaml",splatfestarraycache,locale);
    //TODO Get the Splatfest Cover
 }
 
 export async function getMapRotations(locale){
-    if (ShouldRefresh()) {
      try {
     const file = await httpGetAsync(schdat2,true);
+    if (rotationfileurl === file) {paraseContent("RotationByaml",rotationarraycache,locale);}
     const maininfofile = await httpGetAsync(file);
     const mainfobymal = boss.decrypt(Buffer.from(maininfofile),BOSS_AES_KEY,BOSS_HMAC_KEY);
-    const mainfilearray = new Byaml(mainfobymal.content).root;
-    rotationcache = paraseContent("RotationByaml",mainfilearray,locale);
+    rotationarraycache = new Byaml(mainfobymal.content).root;
+    rotationfileurl = file;
      } catch (c) {
         logger.warn(c);
         return null
      }
-    }
-    return rotationcache;
+    return paraseContent("RotationByaml",rotationarraycache,locale);
 }
 
 function GrabFileUrlFromXML(content){
@@ -90,12 +90,4 @@ export function getNintendoRotation(status){
         optdat2 = optdat2.replace("pretendo.cc","nintendo.net");
         schdat2 = schdat2.replace("pretendo.cc","nintendo.net");
     }
-}
-
-function ShouldRefresh() {
-    //TODO Continue this
-    if (splatfestcache.length === 0 || rotationcache.length === 0) {
-        return true;
-    }
-    return false;
 }

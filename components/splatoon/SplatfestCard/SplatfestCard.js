@@ -5,13 +5,13 @@ import styles from './SplatfestCard.module.css';
 import {mapsinlocale} from '../../../utils/splatoonMaps';
 
 import Image from 'next/image';
-
+import { useEffect, useState } from 'react';
 import { CalendarBlank } from 'phosphor-react';
 
-export default function SplatfestCard({ locale, splatfestInfo: { name, start, end, art, maps } }) {
-	const splatoonMaps = mapsinlocale(locale);
+export default function SplatfestCard({localecode ,locale, splatfestInfo: { name, start, end, art, maps } }) {
+	const [splatoonMaps,setMaps] = useState(mapsinlocale(locale));
 	const formattedDate = (timestamp) => {
-		return new Date(timestamp * 1000).toLocaleString([], {
+		return new Date(timestamp * 1000).toLocaleString(localecode, {
 			weekday: 'long',
 			year: 'numeric',
 			month: 'long',
@@ -23,7 +23,7 @@ export default function SplatfestCard({ locale, splatfestInfo: { name, start, en
 
 	return (
 		<div className={styles.card}>
-			<Title element="h2" className={styles.cardTitle}>{`Splatfest: ${name}`}</Title>
+			<Title element="h2" className={styles.cardTitle}>{`${locale.splatoon.splatfest}: ${name}`}</Title>
 			<div className={styles.date}>
 				<CalendarBlank size={24} weight="bold" />
 				<p>{`${formattedDate(start)} - ${formattedDate(end)}`}</p>

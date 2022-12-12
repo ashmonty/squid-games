@@ -7,7 +7,7 @@ import styles from './MobileLayout.module.css';
 
 import { Fragment } from 'react';
 
-export default function MobileLayout({locale, splatoonInfo, unixCurrentTime, shown, setShown }) {
+export default function MobileLayout({localecode,locale, splatoonInfo, unixCurrentTime, shown, setShown }) {
 	return (
 		<div className={styles.battleCards}>
 			{['regular', 'ranked'].map((battleType, i) => {
@@ -30,6 +30,7 @@ export default function MobileLayout({locale, splatoonInfo, unixCurrentTime, sho
 										key={key}
 										unixCurrentTime={unixCurrentTime}
 										locale={locale}
+										localecode={localecode}
 									/>
 								</Fragment>
 							);

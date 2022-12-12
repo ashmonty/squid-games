@@ -29,17 +29,18 @@ export async function getServerSideProps(ctx) {
 		props: {
 			locale,
 			splatoonInfo,
+			localecode: ctx.locale,
 		},
 	};
 }
 
-export default function Splatoon({ locale, splatoonInfo }) {
+export default function Splatoon({localecode ,locale, splatoonInfo }) {
 	const [unixCurrentTime, setUnixCurrentTime] = useState(1670660187); // hardcoded to ensure consinstency between client and server, will be updated with useEffect as soon as the component mounts
 
 	const [regularShown, setRegularShown] = useState(splatoonInfo.battles.list.length);
 	const [rankedShown, setRankedShown] = useState(splatoonInfo.battles.list.length);
 	const maxShown = Math.max(regularShown, rankedShown);
-	const hasSplatfest = splatoonInfo.splatfest.end >= Math.floor(Date.now() / 1000);
+	const [hasSplatfest, setSplatfestShown] = useState(false); 
 	const shown = {
 		regular: regularShown,
 		ranked: rankedShown,
@@ -59,6 +60,7 @@ export default function Splatoon({ locale, splatoonInfo }) {
 		setInterval(() => {
 			setUnixCurrentTime(Math.floor(Date.now() / 1000));
 		}, 1000);
+		setSplatfestShown(splatoonInfo.splatfest.end <= Math.floor(Date.now() / 1000));
 
 		setIsMobile(window.innerWidth <= 816);
 		window.addEventListener('resize', () => {
@@ -83,12 +85,13 @@ export default function Splatoon({ locale, splatoonInfo }) {
 			</div>
 
 			<div className={styles.skewed}>
-				{hasSplatfest && <SplatfestCard locale={locale} splatfestInfo={splatoonInfo.splatfest} />}
+				{hasSplatfest && <SplatfestCard localecode={localecode} locale={locale} splatfestInfo={splatoonInfo.splatfest} />}
 
 				{isMobile ? (
-					<MobileLayout locale={locale} splatoonInfo={splatoonInfo} unixCurrentTime={unixCurrentTime} shown={shown} setShown={setShown} />
+					<MobileLayout localecode={localecode} locale={locale} splatoonInfo={splatoonInfo} unixCurrentTime={unixCurrentTime} shown={shown} setShown={setShown} />
 				) : (
 					<DesktopLayout
+						localecode={localecode}
 						locale={locale}
 						splatoonInfo={splatoonInfo}
 						unixCurrentTime={unixCurrentTime}
