@@ -27,7 +27,7 @@ export default function BattleCardSection({localecode ,locale, battleInfo, battl
 	useEffect(() => {
 		setStartTime(formattedTime(unixStartTime));
 		setEndTime(formattedTime(unixEndTime));
-	})
+	});
 	return (
 		<div
 			className={classNames(styles.card, styles[battleType], {

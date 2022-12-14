@@ -26,7 +26,7 @@ export default function SplatfestCard({localecode ,locale, splatfestInfo: { name
 	useEffect(() => {
 		setStartTime(formattedDate(start));
 		setEndTime(formattedDate(end));
-	})
+	});
 
 	return (
 		<div className={styles.card}>
