@@ -37,8 +37,8 @@ export async function getServerSideProps(ctx) {
 export default function Splatoon({localecode ,locale, splatoonInfo }) {
 	const [unixCurrentTime, setUnixCurrentTime] = useState(1670660187); // hardcoded to ensure consinstency between client and server, will be updated with useEffect as soon as the component mounts
 
-	const [regularShown, setRegularShown] = useState(splatoonInfo.battles.list.length);
-	const [rankedShown, setRankedShown] = useState(splatoonInfo.battles.list.length);
+	const [regularShown, setRegularShown] = useState((splatoonInfo.battles.list.length < 2)? 1 : 2);
+	const [rankedShown, setRankedShown] = useState((splatoonInfo.battles.list.length < 2)? 1 : 2);
 	const maxShown = Math.max(regularShown, rankedShown);
 	const [hasSplatfest, setSplatfestShown] = useState(false); 
 	const shown = {
