@@ -4,7 +4,7 @@ import { Clock } from 'phosphor-react';
 
 import classNames from 'classnames';
 
-export default function BattleCardCountdown({ battleInfo, row, active, isWide, unixCurrentTime }) {
+export default function BattleCardCountdown({ locale,battleInfo, row, active, isWide, unixCurrentTime }) {
 	const { lastChange, changeWaitSeconds } = battleInfo;
 
 	const unixStartTime = lastChange + changeWaitSeconds * row;
@@ -24,7 +24,7 @@ export default function BattleCardCountdown({ battleInfo, row, active, isWide, u
 	return (
 		<div className={classNames(styles.banner, { [styles.wide]: isWide })}>
 			<Clock className={styles.clock} size={32} weight="bold" />
-			<span>{isActive ? 'Now' : (isPrevious ? 'Previous' : countdown(unixCurrentTime))}</span>
+			<span>{isActive ? `${locale.splatoon.time.now}` : (isPrevious ? `${locale.splatoon.time.previous}` : countdown(unixCurrentTime))}</span>
 		</div>
 	);
 }

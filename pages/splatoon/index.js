@@ -12,81 +12,35 @@ import styles from './index.module.css';
 import { useState, useEffect } from 'react';
 
 import { getLocale } from '../../utils/locale';
+import { getMapRotations, getSplatfestData,getNintendoRotation } from '../../utils/fetcher';
 
 export async function getServerSideProps(ctx) {
 	const locale = getLocale(ctx.locale);
+	getNintendoRotation(false); //used for testing purposes can be removed
+	const splatfest = await getSplatfestData(locale);
+	const maprotations = await getMapRotations(locale);
 
-	// currently hardcoded for testing purposes
 	const splatoonInfo = {
-		splatfest: {
-			name: 'Beans on toast vs. Toast on beans',
-			start: 1670605267,
-			end: 1670609000,
-			art: 'https://cdn.discordapp.com/attachments/413884110667251722/1041436681133363292/handvshome.jpg',
-			maps: ['saltsprayrig', 'flounderheights', 'mahimahiresort'],
-		},
-		battles: {
-			lastChange: 1670687423, // Unix timestamp for when the course last changed
-			changeWaitSeconds: 14400, // how often the courses change in seconds
-			list: [
-				{
-					regular: {
-						rule: 'turfwar',
-						maps: ['camptriggerfish', 'mahimahiresort'],
-					},
-					ranked: {
-						rule: 'splatzones',
-						maps: ['urchinunderpass', 'saltsprayrig'],
-					},
-				},
-				{
-					regular: {
-						rule: 'turfwar',
-						maps: ['urchinunderpass', 'anchovgames'],
-					},
-					ranked: {
-						rule: 'towercontrol',
-						maps: ['flounderheights', 'piranhapit'],
-					},
-				},
-				{
-					regular: {
-						rule: 'turfwar',
-						maps: ['museumdalfonsino', 'portmackerel'],
-					},
-					ranked: {
-						rule: 'towercontrol',
-						maps: ['walleyewarehouse', 'kelpdome'],
-					},
-				},
-				{
-					regular: {
-						rule: 'turfwar',
-						maps: ['hammerheadbridge', 'arowanamall'],
-					},
-					ranked: {
-						rule: 'splatzones',
-						maps: ['mahimahiresort', 'blackbellyskatepark'],
-					},
-				},
-			],
-		},
+		splatfest: splatfest,
+		battles: maprotations,
 	};
 
 	return {
 		props: {
 			locale,
 			splatoonInfo,
+			localecode: ctx.locale,
 		},
 	};
 }
 
-export default function Splatoon({ locale, splatoonInfo }) {
+export default function Splatoon({localecode ,locale, splatoonInfo }) {
 	const [unixCurrentTime, setUnixCurrentTime] = useState(1670660187); // hardcoded to ensure consinstency between client and server, will be updated with useEffect as soon as the component mounts
 
-	const [regularShown, setRegularShown] = useState(2);
-	const [rankedShown, setRankedShown] = useState(2);
+	const [regularShown, setRegularShown] = useState((splatoonInfo.battles.list.length < 2)? 1 : 2);
+	const [rankedShown, setRankedShown] = useState((splatoonInfo.battles.list.length < 2)? 1 : 2);
 	const maxShown = Math.max(regularShown, rankedShown);
+	const [hasSplatfest, setSplatfestShown] = useState(false); 
 	const shown = {
 		regular: regularShown,
 		ranked: rankedShown,
@@ -106,6 +60,7 @@ export default function Splatoon({ locale, splatoonInfo }) {
 		setInterval(() => {
 			setUnixCurrentTime(Math.floor(Date.now() / 1000));
 		}, 1000);
+		setSplatfestShown(splatoonInfo.splatfest.end >= Math.floor(Date.now() / 1000));
 
 		setIsMobile(window.innerWidth <= 816);
 		window.addEventListener('resize', () => {
@@ -124,18 +79,20 @@ export default function Splatoon({ locale, splatoonInfo }) {
 		<div className={styles.wrapper}>
 			<div className={styles.text}>
 				<Title element="h1" className={styles.title}>
-					Splatoon map rotation.
+					{locale.nav.main}
 				</Title>
-				<p>Check the current map rotation and splatfest info for Splatoon on Pretendo Network</p>
+				<p>{locale.nav.description}</p>
 			</div>
 
 			<div className={styles.skewed}>
-				<SplatfestCard locale={locale} splatfestInfo={splatoonInfo.splatfest} />
+				{hasSplatfest && <SplatfestCard localecode={localecode} locale={locale} splatfestInfo={splatoonInfo.splatfest} />}
 
 				{isMobile ? (
-					<MobileLayout splatoonInfo={splatoonInfo} unixCurrentTime={unixCurrentTime} shown={shown} setShown={setShown} />
+					<MobileLayout localecode={localecode} locale={locale} splatoonInfo={splatoonInfo} unixCurrentTime={unixCurrentTime} shown={shown} setShown={setShown} />
 				) : (
 					<DesktopLayout
+						localecode={localecode}
+						locale={locale}
 						splatoonInfo={splatoonInfo}
 						unixCurrentTime={unixCurrentTime}
 						augmentAll={augmentAll}

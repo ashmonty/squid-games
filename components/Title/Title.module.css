@@ -12,7 +12,7 @@ h2.title {
 	font-size: 3rem;
 }
 
-.prefix,
+/*.prefix, Can I ask why? */
 .suffix {
 	color: var(--accent-shade-1);
 }

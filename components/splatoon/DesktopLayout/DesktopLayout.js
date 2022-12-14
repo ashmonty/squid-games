@@ -7,11 +7,11 @@ import styles from './DesktopLayout.module.css';
 
 import { Fragment } from 'react';
 
-export default function DesktopLayout({ splatoonInfo, unixCurrentTime, augmentAll, maxShown }) {
+export default function DesktopLayout({localecode, locale, splatoonInfo, unixCurrentTime, augmentAll, maxShown }) {
 	return (
 		<div className={styles.battleCards}>
 			{['regular', 'ranked'].map((battleType, i) => (
-				<BattleCardHeader key={i} battleType={battleType} />
+				<BattleCardHeader key={i} battleType={battleType} locale={locale} />
 			))}
 
 			{[...Array(maxShown).keys()].map((key, i) => {
@@ -22,6 +22,7 @@ export default function DesktopLayout({ splatoonInfo, unixCurrentTime, augmentAl
 							battleInfo={splatoonInfo.battles}
 							unixCurrentTime={unixCurrentTime}
 							isWide={true}
+							locale={locale}
 						/>
 						<BattleCardSection
 							battleInfo={splatoonInfo.battles}
@@ -29,6 +30,8 @@ export default function DesktopLayout({ splatoonInfo, unixCurrentTime, augmentAl
 							row={i}
 							key={key}
 							unixCurrentTime={unixCurrentTime}
+							locale={locale}
+							localecode={localecode}
 						/>
 						<BattleCardSection
 							battleInfo={splatoonInfo.battles}
@@ -36,6 +39,8 @@ export default function DesktopLayout({ splatoonInfo, unixCurrentTime, augmentAl
 							row={i}
 							key={key + 1}
 							unixCurrentTime={unixCurrentTime}
+							locale={locale}
+							localecode={localecode}
 						/>
 					</Fragment>
 				);
@@ -45,6 +50,7 @@ export default function DesktopLayout({ splatoonInfo, unixCurrentTime, augmentAl
 				onClick={augmentAll}
 				battleType={'all'}
 				end={maxShown >= splatoonInfo.battles.list.length}
+				locale={locale}
 			/>
 		</div>
 	);

@@ -7,13 +7,13 @@ import styles from './MobileLayout.module.css';
 
 import { Fragment } from 'react';
 
-export default function MobileLayout({ splatoonInfo, unixCurrentTime, shown, setShown }) {
+export default function MobileLayout({localecode,locale, splatoonInfo, unixCurrentTime, shown, setShown }) {
 	return (
 		<div className={styles.battleCards}>
 			{['regular', 'ranked'].map((battleType, i) => {
 				return (
 					<div className={styles.battleCard} key={i}>
-						<BattleCardHeader battleType={battleType} />
+						<BattleCardHeader locale={locale} battleType={battleType} />
 						{[...Array(shown[battleType]).keys()].map((key, j) => {
 							return (
 								<Fragment key={key}>
@@ -22,6 +22,7 @@ export default function MobileLayout({ splatoonInfo, unixCurrentTime, shown, set
 										battleInfo={splatoonInfo.battles}
 										unixCurrentTime={unixCurrentTime}
 										active={!key}
+										locale={locale}
 									/>
 									<BattleCardSection
 										battleInfo={splatoonInfo.battles}
@@ -29,6 +30,8 @@ export default function MobileLayout({ splatoonInfo, unixCurrentTime, shown, set
 										row={j}
 										key={key}
 										unixCurrentTime={unixCurrentTime}
+										locale={locale}
+										localecode={localecode}
 									/>
 								</Fragment>
 							);
@@ -38,6 +41,7 @@ export default function MobileLayout({ splatoonInfo, unixCurrentTime, shown, set
 							onClick={() => setShown(battleType, shown[battleType] + 1)}
 							battleType={battleType}
 							end={shown[battleType] >= splatoonInfo.battles.list.length}
+							locale={locale}
 						/>
 					</div>
 				);

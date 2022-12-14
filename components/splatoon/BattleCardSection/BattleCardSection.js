@@ -1,26 +1,33 @@
 import styles from './BattleCardSection.module.css';
 
-import splatoonMaps from '../../../utils/splatoonMaps';
+import {mapsinlocale} from '../../../utils/splatoonMaps';
 
 import Map from '../Map/Map';
 import { Placeholder, Clock } from 'phosphor-react';
 import classNames from 'classnames';
+import { useEffect, useState } from 'react';
 
-export default function BattleCardSection({ locale, battleInfo, battleType, row, hideOnMobile, unixCurrentTime }) {
+export default function BattleCardSection({localecode ,locale, battleInfo, battleType, row, hideOnMobile, unixCurrentTime }) {
 	const { lastChange, changeWaitSeconds } = battleInfo;
 	const { maps, rule } = battleInfo.list[row][battleType];
-
+	const [splatoonMaps,setMaps] = useState(mapsinlocale(locale));
 	const unixStartTime = lastChange + changeWaitSeconds * row;
 	const unixEndTime = lastChange + changeWaitSeconds * (row + 1);
 	const isActive = unixCurrentTime >= unixStartTime && unixCurrentTime < unixEndTime;
 
 	const formattedTime = (timestamp) => {
-		return new Date(timestamp * 1000).toLocaleString([], {
+		return new Date(timestamp * 1000).toLocaleString(localecode, {
 			hour: 'numeric',
-			minute: 'numeric',
+			minute: 'numeric'
 		});
 	};
 
+	const [formattedStartTime,setStartTime] = useState(null);
+	const [formattedEndTime,setEndTime] = useState(null);
+	useEffect(() => {
+		setStartTime(formattedTime(unixStartTime));
+		setEndTime(formattedTime(unixEndTime));
+	});
 	return (
 		<div
 			className={classNames(styles.card, styles[battleType], {
@@ -41,7 +48,7 @@ export default function BattleCardSection({ locale, battleInfo, battleType, row,
 				</div>
 				<div className={styles.time}>
 					<Clock size={24} weight="bold" />
-					<p>{`${formattedTime(unixStartTime)} - ${formattedTime(unixEndTime)}`}</p>
+					<p>{`${formattedStartTime} - ${formattedEndTime}`}</p>
 				</div>
 			</div>
 		</div>
